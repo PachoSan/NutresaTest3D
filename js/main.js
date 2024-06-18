@@ -15,7 +15,7 @@ const rgbeLoader = new RGBELoader()
 // const environmentMap = cubeTextureLoader.load(
 //   '../public/hdri/satara.hdr'
 // )
-rgbeLoader.load('../public/hdri/galaxy1.jpg', (environmentMap)=>{
+rgbeLoader.load('../static/hdri/galaxy1.jpg', (environmentMap)=>{
   environmentMap.mapping = THREE.EquirectangularReflectionMapping
 
   scene.background = environmentMap
@@ -84,7 +84,7 @@ let mixer2;
 let mixer3;
 
 // CASTILLO
-loadModel("../public/models/bishop_castle2.glb")
+loadModel("../static/models/bishop_castle2.glb")
   .then((castilloCargado) => {
     camera.lookAt(castilloCargado);
     scene.add(castilloCargado.scene.children[0]);
@@ -92,7 +92,7 @@ loadModel("../public/models/bishop_castle2.glb")
 
   
 //ISLA 1
-loadModel("../public/models/isla.glb")
+loadModel("../static/models/isla.glb")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
@@ -108,7 +108,7 @@ loadModel("../public/models/isla.glb")
   })
   
 //ISLA 2
-loadModel("../public/models/isla.glb")
+loadModel("../static/models/isla.glb")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
@@ -123,7 +123,7 @@ loadModel("../public/models/isla.glb")
   })
 
 //ISLA 3
-loadModel("../public/models/isla.glb")
+loadModel("../static/models/isla.glb")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
