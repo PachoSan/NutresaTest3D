@@ -84,7 +84,7 @@ let mixer2;
 let mixer3;
 
 // CASTILLO
-loadModel("../static/models/bishop_castle2.glb", "CASTILLO")
+loadModel("./models/bishop_castle2.glb", "CASTILLO")
   .then((castilloCargado) => {
     camera.lookAt(castilloCargado);
     scene.add(castilloCargado.scene.children[0]);
@@ -92,7 +92,7 @@ loadModel("../static/models/bishop_castle2.glb", "CASTILLO")
 
   
 //ISLA 1
-loadModel("../static/models/isla.glb", "ISLA 1")
+loadModel("./models/isla.glb", "ISLA 1")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
@@ -108,7 +108,7 @@ loadModel("../static/models/isla.glb", "ISLA 1")
   })
   
 //ISLA 2
-loadModel("../static/models/isla.glb", "ISLA 2")
+loadModel("./models/isla.glb", "ISLA 2")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
@@ -123,7 +123,7 @@ loadModel("../static/models/isla.glb", "ISLA 2")
   })
 
 //ISLA 3
-loadModel("../static/models/isla.glb", "ISLA 3")
+loadModel("./models/isla.glb", "ISLA 3")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
