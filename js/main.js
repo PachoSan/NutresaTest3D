@@ -5,8 +5,9 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { loadModel } from './loadModels';
 import * as dat from 'lil-gui'
 
-const cubeTextureLoader = new THREE.CubeTextureLoader()
+
 const rgbeLoader = new RGBELoader()
+console.log(rgbeLoader);
 
 /**
  * Environment map
@@ -15,12 +16,7 @@ const rgbeLoader = new RGBELoader()
 // const environmentMap = cubeTextureLoader.load(
 //   '../public/hdri/satara.hdr'
 // )
-rgbeLoader.load('../static/hdri/galaxy1.jpg', (environmentMap)=>{
-  environmentMap.mapping = THREE.EquirectangularReflectionMapping
 
-  scene.background = environmentMap
-  scene.environment = environmentMap
-})
 
 /**
  * Colores
@@ -67,6 +63,12 @@ const canvas = document.getElementById("canvas");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(colores.elevacion);
 
+rgbeLoader.load('./hdri/galaxy1.hdr', (environmentMap)=>{
+  environmentMap.mapping = THREE.EquirectangularReflectionMapping
+
+  scene.background = environmentMap
+  scene.environment = environmentMap
+})
 
 /**
  * Light
