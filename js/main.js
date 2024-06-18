@@ -86,7 +86,7 @@ let mixer2;
 let mixer3;
 
 // CASTILLO
-loadModel("./models/bishop_castle2.glb", "CASTILLO")
+loadModel("./models/bishop_castle.glb", "CASTILLO")
   .then((castilloCargado) => {
     camera.lookAt(castilloCargado);
     scene.add(castilloCargado.scene.children[0]);
