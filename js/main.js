@@ -1,22 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+import { portal } from './portal.js'
 
 import { loadModel } from './loadModels';
 import * as dat from 'lil-gui'
 
-
 const rgbeLoader = new RGBELoader()
-console.log(rgbeLoader);
-
-/**
- * Environment map
- */
-// LDR cube texture
-// const environmentMap = cubeTextureLoader.load(
-//   '../public/hdri/satara.hdr'
-// )
-
 
 /**
  * Colores
@@ -38,10 +28,12 @@ const guiIsla1 = new dat.GUI({
   closeFolders: false
 })
 
-const isla1 = guiIsla1.addFolder('Isla 1').close();
-const isla2 = guiIsla1.addFolder('Isla 2').close();
-const isla3 = guiIsla1.addFolder('Isla 3').close();
-const galaxy = guiIsla1.addFolder('Galaxia').close();
+const isla1 = guiIsla1.addFolder('Isla 1').close()
+const isla2 = guiIsla1.addFolder('Isla 2').close()
+const galaxy = guiIsla1.addFolder('Galaxia').close()
+const portalParametros = guiIsla1.addFolder('Parametros del portal').close()
+const portalPosition1 = guiIsla1.addFolder('Portal 1').close()
+const portalPosition2 = guiIsla1.addFolder('Portal 2').close()
 
 //Funcion para crear el GUI
 function setGuiUI(model, campo, parametro, nombre, gui){
@@ -83,7 +75,6 @@ scene.add(ambientLight)
 */
 let mixer;
 let mixer2;
-let mixer3;
 
 // CASTILLO
 loadModel("./models/bishop_castle.glb", "CASTILLO")
@@ -98,7 +89,7 @@ loadModel("./models/isla.glb", "ISLA 1")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
-    islaCargada.scene.position.set(-9,3,4)
+    islaCargada.scene.position.set(-5.8,3.16,-3.3)
 
     mixer = new THREE.AnimationMixer(islaCargada.scene)
     const action = mixer.clipAction(islaCargada.animations[0])
@@ -114,7 +105,7 @@ loadModel("./models/isla.glb", "ISLA 2")
   .then((islaCargada) => {
     scene.add(islaCargada.scene);
     islaCargada.scene.scale.set(.02,.02,.02)
-    islaCargada.scene.position.set(4,1,9)
+    islaCargada.scene.position.set(4,1.72,9)
 
     mixer2 = new THREE.AnimationMixer(islaCargada.scene)
     const action2 = mixer2.clipAction(islaCargada.animations[0])
@@ -124,24 +115,47 @@ loadModel("./models/isla.glb", "ISLA 2")
     setGuiUI(islaCargada.scene, "PROFUNDIDAD", "z", "Isla 2", isla2)
   })
 
-//ISLA 3
-loadModel("./models/isla.glb", "ISLA 3")
-  .then((islaCargada) => {
-    scene.add(islaCargada.scene);
-    islaCargada.scene.scale.set(.02,.02,.02)
-    islaCargada.scene.position.set(-4,5,-10)
-
-    mixer3 = new THREE.AnimationMixer(islaCargada.scene)
-    const action2 = mixer3.clipAction(islaCargada.animations[0])
-    action2.play()
-
-    setGuiUI(islaCargada.scene, "ALTURA", "y", "Isla 3", isla3)
-    setGuiUI(islaCargada.scene, "LADOS", "x", "Isla 3", isla3)
-    setGuiUI(islaCargada.scene, "PROFUNDIDAD", "z", "Isla 3", isla3)
-  })
+/**
+ * Portal
+ */
+const parameters2 = {}
+parameters2.count = 100000
+parameters2.size = 0.01
+parameters2.radius = 5
+parameters2.branches = 3
+parameters2.spin = 1
+parameters2.randomness = 0.2
+parameters2.randomnessPower = 3
+parameters2.insideColor = colores.elevacionC
+parameters2.outsideColor = colores.primario
 
 
-// scene.background = environmentMap
+let points1 = null
+let geometr1 = null
+let material1 = null
+let portal1 = portal(parameters2, scene, points1, geometr1, material1)
+setGuiUI(portal1, "ALTURA", "y", "Portal 1", portalPosition1)
+setGuiUI(portal1, "LADOS", "x", "Portal 1", portalPosition1)
+setGuiUI(portal1, "PROFUNDIDAD", "z", "Portal 1", portalPosition1)
+
+let points2 = null
+let geometry2 = null
+let material2 = null
+let portal2 = portal(parameters2, scene, points2, geometry2, material2)
+setGuiUI(portal2, "ALTURA", "y", "Portal 2", portalPosition2)
+setGuiUI(portal2, "LADOS", "x", "Portal 2", portalPosition2)
+setGuiUI(portal2, "PROFUNDIDAD", "z", "Portal 2", portalPosition2)
+
+// portalParametros.add(parameters2, 'count').min(100).max(1000000).step(100).onFinishChange(portal1)
+// portalParametros.add(parameters2, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(portal)
+// portalParametros.add(parameters2, 'radius').min(0.01).max(20).step(0.01).onFinishChange(portal)
+// portalParametros.add(parameters2, 'branches').min(2).max(20).step(1).onFinishChange(portal)
+// portalParametros.add(parameters2, 'spin').min(- 5).max(5).step(0.001).onFinishChange(portal)
+// portalParametros.add(parameters2, 'randomness').min(0).max(2).step(0.001).onFinishChange(portal)
+// portalParametros.add(parameters2, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(portal)
+// portalParametros.addColor(parameters2, 'insideColor').onFinishChange(portal)
+// portalParametros.addColor(parameters2, 'outsideColor').onFinishChange(portal)
+
 
 /**
  * Sizes
@@ -198,12 +212,22 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+
+
+
 /**
  * Galaxy
  */
 const parameters = {}
 parameters.count = 1000
 parameters.size = 0.02
+parameters.radius = 5
+parameters.branches = 3
+parameters.spin = 1
+parameters.randomness = 0.2
+parameters.randomnessPower = 3
+parameters.insideColor = '#ff6030'
+parameters.outsideColor = '#1b3984'
 
 let geometry = null
 let material = null
@@ -257,6 +281,10 @@ generateGalaxy()
 
 galaxy.add(parameters, 'count').min(100).max(10000).step(100).onFinishChange(generateGalaxy)
 galaxy.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generateGalaxy)
+galaxy.add(parameters, 'radius').min(0.01).max(20).step(0.01).onFinishChange(generateGalaxy)
+
+
+
 
 /**
  * Animate
@@ -272,10 +300,9 @@ const tick = () => {
   // Update controls
   controls.update();
 
-  if (mixer && mixer2 && mixer3) {
+  if (mixer && mixer2) {
     mixer.update(deltaTime)
     mixer2.update(deltaTime)
-    mixer3.update(deltaTime)
   }
 
   // Render
