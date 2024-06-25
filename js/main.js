@@ -31,9 +31,11 @@ const guiIsla1 = new dat.GUI({
 const isla1 = guiIsla1.addFolder('Isla 1').close()
 const isla2 = guiIsla1.addFolder('Isla 2').close()
 const galaxy = guiIsla1.addFolder('Galaxia').close()
-const portalParametros = guiIsla1.addFolder('Parametros del portal').close()
+// const portalParametros = guiIsla1.addFolder('Parametros del portal').close()
 const portalPosition1 = guiIsla1.addFolder('Portal 1').close()
 const portalPosition2 = guiIsla1.addFolder('Portal 2').close()
+const portalPosition3 = guiIsla1.addFolder('Portal 3').close()
+const camaraPosition = guiIsla1.addFolder('Camara').close()
 
 //Funcion para crear el GUI
 function setGuiUI(model, campo, parametro, nombre, gui){
@@ -151,6 +153,16 @@ setGuiUI(portal2, "ALTURA", "y", "Portal 2", portalPosition2)
 setGuiUI(portal2, "LADOS", "x", "Portal 2", portalPosition2)
 setGuiUI(portal2, "PROFUNDIDAD", "z", "Portal 2", portalPosition2)
 
+let points3 = null
+let geometry3 = null
+let material3 = null
+
+let portal3 = portal(parameters2, scene, points3, geometry3, material3)
+portal3.position.set(0,4.19,-7.27)
+setGuiUI(portal3, "ALTURA", "y", "Portal 3", portalPosition3)
+setGuiUI(portal3, "LADOS", "x", "Portal 3", portalPosition3)
+setGuiUI(portal3, "PROFUNDIDAD", "z", "Portal 3", portalPosition3)
+
 // portalParametros.add(parameters2, 'count').min(100).max(1000000).step(100).onFinishChange(portal1)
 // portalParametros.add(parameters2, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(portal)
 // portalParametros.add(parameters2, 'radius').min(0.01).max(20).step(0.01).onFinishChange(portal)
@@ -198,6 +210,10 @@ camera.position.z = 12;
 camera.position.y = 3;
 camera.lookAt(new THREE.Vector3(50, 0, 0))
 scene.add(camera);
+
+setGuiUI(camera, "ALTURA", "y", "Camara", camaraPosition)
+setGuiUI(camera, "LADOS", "x", "Camara", camaraPosition)
+setGuiUI(camera, "PROFUNDIDAD", "z", "Camara", camaraPosition)
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
@@ -308,8 +324,10 @@ const tick = () => {
   //Animacion Portales 
   portal1.rotation.y = elapsedTime*2
   portal2.rotation.y = elapsedTime*-2
-  portal1.position.y = Math.cos(elapsedTime)*1.5
-  portal2.position.y = Math.sin(elapsedTime)*1.5
+  portal3.rotation.y = elapsedTime*-2
+  // portal1.position.y = Math.cos(elapsedTime)*1.5
+  // portal2.position.y = Math.sin(elapsedTime)*1.5
+  // portal3.position.y = Math.cos(elapsedTime)*1.5
 
   //Mixer de islas
   if (mixer && mixer2) {
