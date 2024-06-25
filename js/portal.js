@@ -60,9 +60,10 @@ export const portal = (parameters, scene, points, geometry, material) => {
     material = new THREE.PointsMaterial({
         size: parameters.size,
         sizeAttenuation: true,
-        depthWrite: false,
+        depthWrite: true,
         blending: THREE.AdditiveBlending,
-        vertexColors: true
+        vertexColors: true,
+        depthTest: true
     })
 
     /**

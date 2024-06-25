@@ -121,11 +121,11 @@ loadModel("./models/isla.glb", "ISLA 2")
 const parameters2 = {}
 parameters2.count = 100000
 parameters2.size = 0.01
-parameters2.radius = 5
-parameters2.branches = 3
-parameters2.spin = 1
-parameters2.randomness = 0.2
-parameters2.randomnessPower = 3
+parameters2.radius = 1.5
+parameters2.branches = 4
+parameters2.spin = 2.5
+parameters2.randomness = 0.8
+parameters2.randomnessPower = 2
 parameters2.insideColor = colores.elevacionC
 parameters2.outsideColor = colores.primario
 
@@ -133,7 +133,10 @@ parameters2.outsideColor = colores.primario
 let points1 = null
 let geometr1 = null
 let material1 = null
+
 let portal1 = portal(parameters2, scene, points1, geometr1, material1)
+portal1.position.set(7.42,6.7,0)
+
 setGuiUI(portal1, "ALTURA", "y", "Portal 1", portalPosition1)
 setGuiUI(portal1, "LADOS", "x", "Portal 1", portalPosition1)
 setGuiUI(portal1, "PROFUNDIDAD", "z", "Portal 1", portalPosition1)
@@ -141,7 +144,9 @@ setGuiUI(portal1, "PROFUNDIDAD", "z", "Portal 1", portalPosition1)
 let points2 = null
 let geometry2 = null
 let material2 = null
+
 let portal2 = portal(parameters2, scene, points2, geometry2, material2)
+portal2.position.set(-7.27,0.25,3.83)
 setGuiUI(portal2, "ALTURA", "y", "Portal 2", portalPosition2)
 setGuiUI(portal2, "LADOS", "x", "Portal 2", portalPosition2)
 setGuiUI(portal2, "PROFUNDIDAD", "z", "Portal 2", portalPosition2)
@@ -300,6 +305,13 @@ const tick = () => {
   // Update controls
   controls.update();
 
+  //Animacion Portales 
+  portal1.rotation.y = elapsedTime*2
+  portal2.rotation.y = elapsedTime*-2
+  portal1.position.y = Math.cos(elapsedTime)*1.5
+  portal2.position.y = Math.sin(elapsedTime)*1.5
+
+  //Mixer de islas
   if (mixer && mixer2) {
     mixer.update(deltaTime)
     mixer2.update(deltaTime)

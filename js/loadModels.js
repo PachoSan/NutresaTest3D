@@ -7,6 +7,7 @@ export function loadModel(url, name) {
     return new Promise((resolve) => {
         gltfLoader.load(url, (gltf) => {
             modelo = gltf;
+            
             resolve(modelo);
         },
         (xhr) => {
